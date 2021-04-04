@@ -19,10 +19,10 @@ void	prepare_sprite(t_all *all)
 	i = 0;
 	while (i < all->snum)
 	{
-		all->sprs[i].dst = ((all->plr->pos.x - all->sprs[i].pos.x) *
-							(all->plr->pos.x - all->sprs[i].pos.x) +
-							(all->plr->pos.y - all->sprs[i].pos.y) *
-							(all->plr->pos.y - all->sprs[i].pos.y));
+		all->sprs[i].dst = ((all->plr->pos.x - all->sprs[i].pos.x - 0.5) *
+							(all->plr->pos.x - all->sprs[i].pos.x - 0.5) +
+							(all->plr->pos.y - all->sprs[i].pos.y - 0.5) *
+							(all->plr->pos.y - all->sprs[i].pos.y - 0.5));
 		i++;
 	}
 	all = bubble_sort(all);

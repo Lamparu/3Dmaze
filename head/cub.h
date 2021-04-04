@@ -24,7 +24,7 @@
 
 # define BYTE	unsigned char
 # define RS		0.04
-# define MS		0.1
+# define MS		0.055
 
 /*
 ** ERRORS

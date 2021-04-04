@@ -1,0 +1,14 @@
+F 139,69,19
+S ./textures/avocado.xpm
+NO ./textures/green.xpm
+SO ./textures/black.xpm
+WE ./textures/gold.xpm
+EA ./textures/grey.xpm
+C 247,216,113
+R 800 600
+
+111111
+100101
+102001
+1100N1
+111111

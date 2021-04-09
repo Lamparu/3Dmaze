@@ -26,7 +26,7 @@ int	ft_strlen(const char *str)
 
 char	*ft_strcat_copy(char *dst, const char *src, int dlen)
 {
-	int slen;
+	int	slen;
 
 	slen = -1;
 	dst[dlen] = '\n';

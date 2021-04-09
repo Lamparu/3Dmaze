@@ -17,7 +17,7 @@ void	ft_bzero(void *s, size_t n)
 	size_t			i;
 	unsigned char	*str;
 
-	str = (unsigned char*)s;
+	str = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
@@ -48,9 +48,9 @@ double	ft_abs(double n)
 	return (n);
 }
 
-int		get_color(t_color *c)
+int	get_color(t_color *c)
 {
-	return (c->red << 16) | (c->green << 8) | (c->blue << 0);
+	return ((c->red << 16) | (c->green << 8) | (c->blue << 0));
 }
 
 t_all	*bubble_sort(t_all *all)

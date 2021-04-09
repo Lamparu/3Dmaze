@@ -17,10 +17,10 @@ void	my_mlx_pixel_put(t_win *win, double x, double y, size_t color)
 	char	*dst;
 
 	dst = win->addr + ((int)y * win->line_l + (int)x * (win->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-int		draw_screen(t_all *all)
+int	draw_screen(t_all *all)
 {
 	if (all->on == 1)
 	{

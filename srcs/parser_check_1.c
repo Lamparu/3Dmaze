@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		check_digit(const char *str, int i)
+int	check_digit(const char *str, int i)
 {
 	if (ft_isdigit(str[i]))
 		return (0);
@@ -20,16 +20,18 @@ int		check_digit(const char *str, int i)
 		return (-1);
 }
 
-int		check_color(const char *str, int i, int *color)
+int	check_color(const char *str, int i, int *color, char c)
 {
 	i = check_spaces(i, str);
 	*color = check_digit(str, i);
 	i = get_num(i, str, color);
 	i = check_spaces(i, str);
+	if (c == 'R' || c == 'G')
+		i = check_comma(str, i);
 	return (i);
 }
 
-int		check_comma(const char *str, int i)
+int	check_comma(const char *str, int i)
 {
 	if (str[i])
 	{
@@ -41,18 +43,19 @@ int		check_comma(const char *str, int i)
 	return (i);
 }
 
-int		check_spaces(int i, const char *text)
+int	check_spaces(int i, const char *text)
 {
 	while (ft_isspace(text[i]))
 		i++;
 	return (i);
 }
 
-int		check_open_tex(char *path, char *tex)
+int	check_open_tex(char *path, char *tex)
 {
-	int fd;
+	int	fd;
 
-	if ((fd = open(path, O_RDONLY)) < 0)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
 	{
 		printf("Error\nWrong path to %s texture", tex);
 		close(fd);

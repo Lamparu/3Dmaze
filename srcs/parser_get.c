@@ -14,7 +14,7 @@
 
 t_map	*get_resolution(t_map *map, const char *text)
 {
-	size_t i;
+	size_t	i;
 
 	i = 1;
 	map->r_x = 0;
@@ -37,13 +37,14 @@ t_map	*get_resolution(t_map *map, const char *text)
 
 t_all	*get_sprites(t_all *all)
 {
-	int i;
-	int j;
-	int n;
+	int	i;
+	int	j;
+	int	n;
 
 	if (all->snum == 0)
 		return (all);
-	if (!(all->sprs = malloc(sizeof(t_sprite) * all->snum)))
+	all->sprs = malloc(sizeof(t_sprite) * all->snum);
+	if (!all->sprs)
 		exit_err(all, "Malloc", 1);
 	i = -1;
 	n = 0;
@@ -75,9 +76,11 @@ char	*get_path(const char *text, char next, char *path)
 	i = check_spaces(1, text);
 	if (text[i] == '.' || text[i] == '/')
 	{
-		if ((len = get_len(text + i)) < 6)
+		len = get_len(text + i);
+		if (len < 6)
 			return (NULL);
-		if (!(path = malloc(sizeof(char) * (len + 1))))
+		path = malloc(sizeof(char) * (len + 1));
+		if (!path)
 			return (NULL);
 		while (text[i] != '\n' && text[i] != ' ' && text[i] != '\t')
 		{
@@ -92,7 +95,7 @@ char	*get_path(const char *text, char next, char *path)
 
 t_color	*get_colors(t_color *st, const char *str)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (st->red >= 0 || st->blue >= 0 || st->green >= 0)
@@ -103,14 +106,14 @@ t_color	*get_colors(t_color *st, const char *str)
 	}
 	if (!str[i] || str[i] != ' ')
 		return (st);
-	i = check_color(str, i, &st->red);
-	if ((i = check_comma(str, i)) < 0)
+	i = check_color(str, i, &st->red, 'R');
+	if (i < 0)
 		return (st);
-	i = check_color(str, i, &st->green);
-	if ((i = check_comma(str, i)) < 0)
+	i = check_color(str, i, &st->green, 'G');
+	if (i < 0)
 		return (st);
-	i = check_color(str, i, &st->blue);
-	if (str[i] != '\n')
+	i = check_color(str, i, &st->blue, 'B');
+	if (str[i] && str[i] != '\n')
 	{
 		printf("Error\nColor error");
 		free(st);
@@ -121,9 +124,9 @@ t_color	*get_colors(t_color *st, const char *str)
 
 t_all	*get_map_wh(t_all *all)
 {
-	size_t	y;
-	size_t	x;
-	size_t	max;
+	int	y;
+	int	x;
+	int	max;
 
 	y = 0;
 	max = 0;

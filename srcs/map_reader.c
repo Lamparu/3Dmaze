@@ -27,7 +27,8 @@ t_map	*get_map_info(const char *text, t_map *map)
 		map = check_letter(text + i, map);
 		if (!map)
 			return (NULL);
-		if ((ch = get_n(text + i)) < 0)
+		ch = get_n(text + i);
+		if (ch < 0)
 			break ;
 		i += ch;
 	}
@@ -47,7 +48,8 @@ char	**cut_map(char *text)
 			i++;
 		if (check_map_begin(text + i))
 			break ;
-		if ((ch = get_n(text + i)) < 0)
+		ch = get_n(text + i);
+		if (ch < 0)
 			break ;
 		i += ch;
 	}
@@ -92,12 +94,14 @@ t_all	*parse_file(char *fn)
 	t_all	*all;
 	int		fd;
 
-	if ((fd = open(fn, O_RDONLY)) < 0)
+	fd = open(fn, O_RDONLY);
+	if (fd < 0)
 	{
 		printf("Error\nCan't open map file");
 		exit(2);
 	}
-	if (!(all = init_all()))
+	all = init_all();
+	if (!all)
 	{
 		close(fd);
 		exit(1);

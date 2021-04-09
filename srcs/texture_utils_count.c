@@ -34,29 +34,29 @@ void	count_delta(t_vec ray, t_vec *delta)
 	}
 }
 
-int		count_start(t_all *all, int x)
+int	count_start(t_all *all, int x)
 {
-	int h;
-	int lineh;
-	int start;
+	int	h;
+	int	lineh;
+	int	start;
 
 	h = all->info->r_y;
 	lineh = (int)(h / all->zbuf[x]);
-	start = -lineh / 2 + h / 2;
+	start = -1 * lineh / 2 + (h / 2);
 	if (start < 0)
 		start = 0;
 	return (start);
 }
 
-int		count_end(t_all *all, int x)
+int	count_end(t_all *all, int x)
 {
-	int h;
-	int lineh;
-	int end;
+	int	h;
+	int	lineh;
+	int	end;
 
 	h = all->info->r_y;
 	lineh = (int)(h / all->zbuf[x]);
-	end = lineh / 2 + h / 2;
+	end = lineh / 2 + (h / 2);
 	if (end >= h)
 		end = h - 1;
 	return (end);
@@ -64,7 +64,7 @@ int		count_end(t_all *all, int x)
 
 double	count_wallx(t_all *all, int x, t_draw dr)
 {
-	double wallx;
+	double	wallx;
 
 	if (dr.side == 0)
 		wallx = all->plr->pos.y + all->zbuf[x] * dr.ray.y;

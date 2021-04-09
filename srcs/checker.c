@@ -6,7 +6,7 @@
 /*   By: lcierra <lcierra@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 19:29:59 by lcierra           #+#    #+#             */
-/*   Updated: 2021/04/04 22:48:00 by lcierra          ###   ########.fr       */
+/*   Updated: 2021/04/04 21:36:58 by lcierra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	**copy_map(char **map, int h)
 	int		y;
 	int		len;
 
-	if (!(new = malloc(sizeof(char*) * (h + 1))))
+	new = malloc(sizeof(char *) * (h + 1));
+	if (!new)
 	{
 		printf("Error\nMalloc map error");
 		return (NULL);
@@ -27,7 +28,8 @@ char	**copy_map(char **map, int h)
 	while (y < h)
 	{
 		len = ft_strlen(map[y]);
-		if (!(new[y] = malloc(sizeof(char) * (len + 1))))
+		new[y] = malloc(sizeof(char) * (len + 1));
+		if (!new[y])
 			return (ft_split_error(new, y, "Malloc"));
 		new[y] = fill_empty_map(new[y], len, map[y]);
 		y++;
@@ -36,9 +38,9 @@ char	**copy_map(char **map, int h)
 	return (new);
 }
 
-int		check_cub(char *fn)
+int	check_cub(char *fn)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(fn);
 	if (len < 5)
@@ -46,7 +48,7 @@ int		check_cub(char *fn)
 	return (ft_strcmp(fn + len - 4, ".cub"));
 }
 
-int		check_map(t_all *all)
+int	check_map(t_all *all)
 {
 	int		x;
 	int		y;
@@ -56,7 +58,8 @@ int		check_map(t_all *all)
 		return (0);
 	if (!check_valid_points(all->map))
 		return (0);
-	if (!(map = copy_map(all->map, all->maph)))
+	map = copy_map(all->map, all->maph);
+	if (!map)
 		return (0);
 	y = 0;
 	while (y < all->maph)
@@ -74,7 +77,7 @@ int		check_map(t_all *all)
 	return (1);
 }
 
-int		check_player(t_all *all)
+int	check_player(t_all *all)
 {
 	if (!all->plr)
 		return (0);

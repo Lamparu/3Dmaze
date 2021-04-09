@@ -30,35 +30,43 @@ t_map	*init_map_null(t_map *map)
 	return (map);
 }
 
+void	*init_map_er(t_map *map)
+{
+	free(map->ceil);
+	free(map->text);
+	free(map);
+	return (NULL);
+}
+
 t_map	*init_map(t_map *map)
 {
-	if (!(map = malloc(sizeof(t_map))))
+	map = malloc(sizeof(t_map));
+	if (!map)
 		return (NULL);
-	if (!(map->text = malloc(sizeof(t_texture))))
+	map->text = malloc(sizeof(t_texture));
+	if (!map->text)
 	{
 		free(map);
 		return (NULL);
 	}
-	if (!(map->ceil = malloc(sizeof(t_color))))
+	map->ceil = malloc(sizeof(t_color));
+	if (!map->ceil)
 	{
 		free(map->text);
 		free(map);
 		return (NULL);
 	}
-	if (!(map->floor = malloc(sizeof(t_color))))
-	{
-		free(map->ceil);
-		free(map->text);
-		free(map);
-		return (NULL);
-	}
+	map->floor = malloc(sizeof(t_color));
+	if (!map->floor)
+		return (init_map_er(map));
 	map = init_map_null(map);
 	return (map);
 }
 
 t_plr	*init_plr(t_plr *plr)
 {
-	if (!(plr = malloc(sizeof(t_plr))))
+	plr = malloc(sizeof(t_plr));
+	if (!plr)
 		return (NULL);
 	plr->dir.x = 0;
 	plr->dir.y = 0;
@@ -69,7 +77,8 @@ t_plr	*init_plr(t_plr *plr)
 
 t_win	*init_win(t_win *win)
 {
-	if (!(win = malloc(sizeof(t_win))))
+	win = malloc(sizeof(t_win));
+	if (!win)
 		return (NULL);
 	win->line_l = 0;
 	win->en = 0;

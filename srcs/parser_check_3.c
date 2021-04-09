@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		check_map_begin(const char *str)
+int	check_map_begin(const char *str)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ int		check_map_begin(const char *str)
 	return (0);
 }
 
-int		check_texture(t_texture *tex)
+int	check_texture(t_texture *tex)
 {
 	if (!tex->we || !tex->ea || !tex->so || !tex->no || !tex->sprite)
 	{
@@ -42,7 +42,7 @@ int		check_texture(t_texture *tex)
 	return (1);
 }
 
-int		check_colors(t_color *col, char *side)
+int	check_colors(t_color *col, char *side)
 {
 	if (col->green < 0 && col->red < 0 && col->blue < 0)
 	{
@@ -67,7 +67,7 @@ int		check_colors(t_color *col, char *side)
 	return (1);
 }
 
-int		check_map_info(t_map *map)
+int	check_map_info(t_map *map)
 {
 	if (!check_resolution(map->r_x, map->r_y))
 		return (0);
@@ -80,7 +80,7 @@ int		check_map_info(t_map *map)
 	return (1);
 }
 
-int		path_err(const char *text, char *path, char next)
+int	path_err(const char *text, char *path, char next)
 {
 	if (path)
 	{

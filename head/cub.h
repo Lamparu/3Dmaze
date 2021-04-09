@@ -20,11 +20,9 @@
 # include <../mlx/mlx.h>
 # include <math.h>
 
-# include "get_next_line.h"
-
 # define BYTE	unsigned char
 # define RS		0.04
-# define MS		0.055
+# define MS		0.05
 
 /*
 ** ERRORS
@@ -34,7 +32,7 @@
 ** 4 - file content
 */
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	char		*no;
 	char		*so;
@@ -43,7 +41,7 @@ typedef struct	s_texture
 	char		*sprite;
 }				t_texture;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*img;
 	char		*data;
@@ -54,14 +52,14 @@ typedef struct	s_img
 	int			line_l;
 }				t_img;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	int			red;
 	int			green;
 	int			blue;
 }				t_color;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	int			r_x;
 	int			r_y;
@@ -70,7 +68,7 @@ typedef struct	s_map
 	t_color		*ceil;
 }				t_map;
 
-typedef struct	s_win
+typedef struct s_win
 {
 	void		*mlx;
 	void		*win;
@@ -81,31 +79,31 @@ typedef struct	s_win
 	int			en;
 }				t_win;
 
-typedef struct	s_vec
+typedef struct s_vec
 {
 	double		x;
 	double		y;
 }				t_vec;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int			x;
 	int			y;
 }				t_point;
 
-typedef struct	s_plr
+typedef struct s_plr
 {
 	t_vec		pos;
 	t_vec		dir;
 }				t_plr;
 
-typedef struct	s_sprite
+typedef struct s_sprite
 {
 	double		dst;
 	t_vec		pos;
 }				t_sprite;
 
-typedef struct	s_key
+typedef struct s_key
 {
 	int			w;
 	int			a;
@@ -115,7 +113,7 @@ typedef struct	s_key
 	int			left;
 }				t_key;
 
-typedef struct	s_all
+typedef struct s_all
 {
 	t_win		*win;
 	t_map		*info;
@@ -131,7 +129,7 @@ typedef struct	s_all
 	t_key		key;
 }				t_all;
 
-typedef struct	s_draw
+typedef struct s_draw
 {
 	int			side;
 	int			texnum;
@@ -142,7 +140,7 @@ typedef struct	s_draw
 
 }				t_draw;
 
-typedef struct	s_draw_sprite
+typedef struct s_draw_sprite
 {
 	t_point		start;
 	t_point		end;
@@ -203,16 +201,35 @@ void			exit_screenshot(t_all *all, int fd, char *er);
 char			**ft_split_error(char **arr, int n, char *er);
 
 /*
+ ** GNL
+*/
+int				copy_saver(char *saver, char **line);
+int				check_saver(char *saver, char **line);
+int				gnl_return(int n, int len, char *buff);
+int				gnl_init(char **line, char **buff, char **saver);
+int				get_next_line(int fd, char **line);
+/*
+ ** GNL UTILS
+*/
+char			*ft_strdup(const char *s);
+char			*ft_strcpy(const char *src, char *dst);
+int				ft_strchrn(const char *str);
+char			*ft_strcat(char *dst, char *src);
+int				ft_add_line(char **line, char *buff, int n);
+
+/*
  ** INIT
 */
+t_all			*init_mlx(t_all *all);
 void			*init_err(t_all *all, char *er);
 t_all			*init_all_null(t_all *all);
-t_all			*init_all();
+t_all			*init_all(void);
 t_img			**init_imgs(t_all *all);
 /*
  ** INIT PARTS
 */
 t_map			*init_map_null(t_map *map);
+void			*init_map_er(t_map *map);
 t_map			*init_map(t_map *map);
 t_plr			*init_plr(t_plr *plr);
 t_win			*init_win(t_win *win);
@@ -223,8 +240,8 @@ t_win			*init_win(t_win *win);
 int				key_press(int key, t_all *all);
 int				key_unpress(int key, t_all *all);
 void			rotate(t_all *all, int side);
+void			handle_wasd(t_all *all, t_vec vec, int side);
 int				handle_key(t_all *all);
-int				check_position(t_all *all, size_t x, size_t y);
 
 /*
  ** MAP READER
@@ -239,7 +256,7 @@ t_all			*parse_file(char *fn);
  ** PARSER CHECK
 */
 int				check_digit(const char *str, int i);
-int				check_color(const char *str, int i, int *color);
+int				check_color(const char *str, int i, int *color, char c);
 int				check_comma(const char *str, int i);
 int				check_spaces(int i, const char *text);
 int				check_open_tex(char *path, char *tex);
@@ -298,7 +315,7 @@ void			draw_sprites(t_all *all);
  ** SPRITE UTILS COUNT
 */
 void			count_transform(t_all *all, t_vec *sprite, t_vec *transform,
-																	size_t i);
+					size_t i);
 void			count_start_sp(t_all *all, t_point *start, t_vec transform);
 void			count_end_sp(t_all *all, t_point *end, t_vec transform);
 
@@ -324,7 +341,7 @@ int				draw_tex(t_all *all, t_draw *dr, int x, int y);
 int				choose_tex(t_draw dr);
 int				hit_wall(t_all *all, t_point *map, t_point *step, t_vec ray);
 int				change_side(t_vec *sidedst, t_vec delta, t_point *map,
-															t_point *step);
+					t_point *step);
 /*
  ** TEXTURES UTILS RAY
 */
@@ -352,5 +369,8 @@ int				get_n(const char *str);
 int				get_len(const char *str);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char			*ft_strcat_text(char *dst, char *src);
+
+int				ft_strlen(const char *str);
+char			*ft_strcat_copy(char *dst, const char *src, int dlen);
 
 #endif

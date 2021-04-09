@@ -14,7 +14,7 @@
 
 t_map	*check_letter(const char *text, t_map *map)
 {
-	int i;
+	int	i;
 
 	i = check_spaces(0, text);
 	if (text[i] == 'R')
@@ -25,6 +25,8 @@ t_map	*check_letter(const char *text, t_map *map)
 		return (check_ns(text, map, i));
 	else if (text[i] == 'F' || text[i] == 'C')
 		return (check_floor_ceil(text, map, i));
+	else if (text[i] == '\n')
+		return (map);
 	else
 		return (info_destroy(map, "UNKNOWN"));
 	return (map);
@@ -34,20 +36,23 @@ t_map	*check_ns(const char *text, t_map *map, int i)
 {
 	if (text[i] == 'N')
 	{
-		if (!(map->text->no = get_path(text + i + 1, 'O', map->text->no)))
+		map->text->no = get_path(text + i + 1, 'O', map->text->no);
+		if (!map->text->no)
 			return (info_destroy(map, "NO"));
 	}
 	else if (text[i] == 'S')
 	{
 		if (ft_isspace(text[i + 1]))
 		{
-			if (!(map->text->sprite = get_path(text + i + 1, ' ',
-						map->text->sprite)))
+			map->text->sprite = get_path(text + i + 1, ' ',
+					map->text->sprite);
+			if (!map->text->sprite)
 				return (info_destroy(map, "S"));
 		}
 		else
 		{
-			if (!(map->text->so = get_path(text + i + 1, 'O', map->text->so)))
+			map->text->so = get_path(text + i + 1, 'O', map->text->so);
+			if (!map->text->so)
 				return (info_destroy(map, "S*"));
 		}
 	}
@@ -58,12 +63,14 @@ t_map	*check_we(const char *text, t_map *map, int i)
 {
 	if (text[i] == 'W')
 	{
-		if (!(map->text->we = get_path(text + i + 1, 'E', map->text->we)))
+		map->text->we = get_path(text + i + 1, 'E', map->text->we);
+		if (!map->text->we)
 			return (info_destroy(map, "WE"));
 	}
 	else if (text[i] == 'E')
 	{
-		if (!(map->text->ea = get_path(text + i + 1, 'A', map->text->ea)))
+		map->text->ea = get_path(text + i + 1, 'A', map->text->ea);
+		if (!map->text->ea)
 			return (info_destroy(map, "EA"));
 	}
 	return (map);
@@ -73,18 +80,20 @@ t_map	*check_floor_ceil(const char *text, t_map *map, int i)
 {
 	if (text[i] == 'F')
 	{
-		if (!(map->floor = get_colors(map->floor, text + i)))
+		map->floor = get_colors(map->floor, text + i);
+		if (!map->floor)
 			return (info_destroy(map, NULL));
 	}
 	else if (text[i] == 'C')
 	{
-		if (!(map->ceil = get_colors(map->ceil, text + i)))
+		map->ceil = get_colors(map->ceil, text + i);
+		if (!map->ceil)
 			return (info_destroy(map, NULL));
 	}
 	return (map);
 }
 
-int		check_resolution(int x, int y)
+int	check_resolution(int x, int y)
 {
 	if (x < 1 || y < 1)
 	{

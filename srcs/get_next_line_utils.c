@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../head/get_next_line.h"
-
-int		ft_strlen(const char *str)
-{
-	int i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "../head/cub.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -30,7 +18,8 @@ char	*ft_strdup(const char *s)
 	char	*str;
 
 	len = ft_strlen(s);
-	if (!(str = malloc(len + 1)))
+	str = malloc(len + 1);
+	if (!str)
 		return (NULL);
 	len = 0;
 	while (s[len])
@@ -44,7 +33,7 @@ char	*ft_strdup(const char *s)
 
 char	*ft_strcpy(const char *src, char *dst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!src || !dst)
@@ -58,9 +47,9 @@ char	*ft_strcpy(const char *src, char *dst)
 	return (dst);
 }
 
-int		ft_strchrn(const char *str)
+int	ft_strchrn(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -83,7 +72,8 @@ char	*ft_strcat(char *dst, char *src)
 	tmp = NULL;
 	if (dst)
 		tmp = dst;
-	if (!(dst = malloc(dlen + slen + 1)))
+	dst = malloc(dlen + slen + 1);
+	if (!dst)
 		return (NULL);
 	if (tmp)
 		dst = ft_strcpy(tmp, dst);
@@ -92,4 +82,17 @@ char	*ft_strcat(char *dst, char *src)
 		dst[dlen + slen] = src[slen];
 	dst[slen + dlen] = '\0';
 	return (dst);
+}
+
+int	ft_add_line(char **line, char *buff, int n)
+{
+	char	*tmp;
+
+	tmp = *line;
+	*line = ft_strcat(*line, buff);
+	if (!*line)
+		n = -2;
+	if (tmp)
+		free(tmp);
+	return (n);
 }

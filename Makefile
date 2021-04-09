@@ -38,7 +38,7 @@ SRCS =	cub.c \
 	srcs/screenshot.c \
 	srcs/sprite.c srcs/sprite_utils_count.c \
 	srcs/texture.c srcs/texture_utils_count.c srcs/texture_utils_draw.c srcs/texture_utils_ray.c \
-	srcs/utils_1.c srcs/utils_2.c srcs/utils_3.c
+	srcs/utils_1.c srcs/utils_2.c srcs/utils_3.c srcs/utils_4.c
 
 OBJS = 	${SRCS:.c=.o}
 

@@ -14,16 +14,16 @@
 
 t_vec	vec_rotate(t_vec vec, double angle)
 {
-	t_vec v;
+	t_vec	v;
 
 	v.x = vec.x * cos(angle) - vec.y * sin(angle);
 	v.y = vec.x * sin(angle) + vec.y * cos(angle);
 	return (v);
 }
 
-int		ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s1 || !s2)
@@ -44,8 +44,8 @@ int		ft_strcmp(const char *s1, const char *s2)
 
 t_all	*chose_resolution(t_all *all)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	mlx_get_screen_size(all->win->mlx, &x, &y);
 	if (x < all->info->r_x || y < all->info->r_y)
@@ -56,7 +56,7 @@ t_all	*chose_resolution(t_all *all)
 	return (all);
 }
 
-int		ft_isspace(char a)
+int	ft_isspace(char a)
 {
 	if (!a)
 		return (0);
@@ -65,7 +65,7 @@ int		ft_isspace(char a)
 	return (0);
 }
 
-int		ft_isdigit(char a)
+int	ft_isdigit(char a)
 {
 	if (!a)
 		return (0);

@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		get_num(int i, const char *text, int *n)
+int	get_num(int i, const char *text, int *n)
 {
 	while (ft_isdigit(text[i]))
 	{
@@ -22,9 +22,9 @@ int		get_num(int i, const char *text, int *n)
 	return (i);
 }
 
-int		get_n(const char *str)
+int	get_n(const char *str)
 {
-	size_t i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -36,11 +36,11 @@ int		get_n(const char *str)
 	return (-1);
 }
 
-int		get_len(const char *str)
+int	get_len(const char *str)
 {
-	int i;
-	int end;
-	int del;
+	int	i;
+	int	end;
+	int	del;
 
 	i = 0;
 	end = 0;
@@ -81,8 +81,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 char	*ft_strcat_text(char *dst, char *src)
 {
-	size_t	dlen;
-	size_t	slen;
+	int		dlen;
+	int		slen;
 	char	*tmp;
 
 	dlen = ft_strlen(dst);
@@ -93,17 +93,14 @@ char	*ft_strcat_text(char *dst, char *src)
 		tmp = ft_strdup(dst);
 		free(dst);
 	}
-	if (!(dst = malloc(dlen + slen + 2)))
+	dst = malloc(dlen + slen + 2);
+	if (!dst)
 		return (NULL);
 	if (tmp)
 	{
 		dst = ft_strcpy(tmp, dst);
 		free(tmp);
 	}
-	slen = -1;
-	dst[dlen] = '\n';
-	while (src[++slen])
-		dst[dlen + slen + 1] = src[slen];
-	dst[slen + dlen + 1] = '\0';
+	dst = ft_strcat_copy(dst, src, dlen);
 	return (dst);
 }

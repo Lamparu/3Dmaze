@@ -12,22 +12,22 @@
 
 #include "../head/cub.h"
 
-int		draw_tex(t_all *all, t_draw *dr, int x, int y)
+int	draw_tex(t_all *all, t_draw *dr, int x, int y)
 {
 	double	tex;
-	int		color;
+	size_t	color;
 	int		lineh;
 
 	lineh = (int)(all->info->r_y / all->zbuf[x]);
 	dr->step = (double)all->tex[dr->texnum]->h / lineh;
-	tex = (dr->draw.x - (double)all->info->r_y / 2 + (double)lineh / 2) *
-																	dr->step;
+	tex = (dr->draw.x - (double)all->info->r_y / 2 + (double)lineh / 2)
+		* dr->step;
 	while (y < dr->draw.y)
 	{
 		dr->tex.y = (int)tex & (all->tex[dr->texnum]->h - 1);
 		tex += dr->step;
-		color = (size_t)((unsigned int*)all->tex[dr->texnum]->data)
-						[all->tex[dr->texnum]->h * dr->tex.y + dr->tex.x];
+		color = (int)((unsigned int *)all->tex[dr->texnum]->data)
+		[all->tex[dr->texnum]->h * dr->tex.y + dr->tex.x];
 		my_mlx_pixel_put(all->win, x, y, color);
 		y++;
 	}
@@ -40,7 +40,7 @@ int		draw_tex(t_all *all, t_draw *dr, int x, int y)
 ** ray.y > 0 => south
 */
 
-int		choose_tex(t_draw dr)
+int	choose_tex(t_draw dr)
 {
 	if (dr.side == 0)
 	{
@@ -58,7 +58,7 @@ int		choose_tex(t_draw dr)
 	}
 }
 
-int		change_side(t_vec *sidedst, t_vec delta, t_point *map, t_point *step)
+int	change_side(t_vec *sidedst, t_vec delta, t_point *map, t_point *step)
 {
 	if (sidedst->x < sidedst->y)
 	{
@@ -74,7 +74,7 @@ int		change_side(t_vec *sidedst, t_vec delta, t_point *map, t_point *step)
 	}
 }
 
-int		hit_wall(t_all *all, t_point *map, t_point *step, t_vec ray)
+int	hit_wall(t_all *all, t_point *map, t_point *step, t_vec ray)
 {
 	int		hit;
 	int		side;
@@ -84,8 +84,8 @@ int		hit_wall(t_all *all, t_point *map, t_point *step, t_vec ray)
 	hit = 0;
 	count_delta(ray, &delta);
 	check_ray(ray, step, &sidedst, all);
-	map->x = (int)all->plr->pos.x;
-	map->y = (int)all->plr->pos.y;
+	map->x = floor(all->plr->pos.x);
+	map->y = floor(all->plr->pos.y);
 	while (hit == 0)
 	{
 		side = change_side(&sidedst, delta, map, step);

@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		check_direction(char a)
+int	check_direction(char a)
 {
 	if (a == 'N' || a == 'S' || a == 'E' || a == 'W')
 		return (1);
@@ -21,7 +21,7 @@ int		check_direction(char a)
 
 t_all	*get_direction(char a, t_all *all)
 {
-	double norm;
+	double	norm;
 
 	if (a == 'N')
 		all->plr->dir.y = -1.0;
@@ -40,8 +40,8 @@ t_all	*get_direction(char a, t_all *all)
 
 t_all	*get_plr(t_all *all)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	while (all->map[++i])

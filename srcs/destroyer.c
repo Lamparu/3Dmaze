@@ -61,7 +61,7 @@ void	*info_destroy(t_map *map, const char *er)
 
 void	*map_destroy(char **map, size_t h)
 {
-	size_t y;
+	size_t	y;
 
 	if (!map)
 		return (NULL);
@@ -76,7 +76,7 @@ void	*map_destroy(char **map, size_t h)
 	return (NULL);
 }
 
-int		all_destroy(t_all *all)
+int	all_destroy(t_all *all)
 {
 	if (!all)
 		return (0);

@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		ft_exit(t_all *all)
+int	ft_exit(t_all *all)
 {
 	all->on = 0;
 	return (0);

@@ -29,27 +29,27 @@ void	count_raydir(t_all *all, t_vec *ray, int x)
 
 double	count_perpwall(t_all *all, t_draw *dr)
 {
-	t_point map;
-	t_point step;
+	t_point	map;
+	t_point	step;
 
 	dr->side = hit_wall(all, &map, &step, dr->ray);
 	if (dr->side == 0)
-		return (map.x - all->plr->pos.x + (double)(1 - step.x) / 2) / dr->ray.x;
+		return ((map.x - all->plr->pos.x + (double)(1 - step.x) / 2)
+			/ dr->ray.x);
 	else
-		return (map.y - all->plr->pos.y + (double)(1 - step.y) / 2) / dr->ray.y;
+		return ((map.y - all->plr->pos.y + (double)(1 - step.y) / 2)
+			/ dr->ray.y);
 }
 
 void	prepare_draw(t_all *all, t_draw *dr, int x)
 {
-	double wallx;
+	double	wallx;
 
 	dr->draw.x = count_start(all, x);
 	dr->draw.y = count_end(all, x);
 	wallx = count_wallx(all, x, *dr);
 	dr->texnum = choose_tex(*dr);
 	dr->tex.x = (int)(wallx * (double)all->tex[dr->texnum]->w);
-	if ((dr->side == 0 && dr->ray.x > 0) || (dr->side == 1 && dr->ray.x < 0))
-		dr->tex.x = all->tex[dr->texnum]->w - dr->tex.x - 1;
 }
 
 void	draw_column(t_all *all, t_draw *dr, int x)
@@ -59,12 +59,12 @@ void	draw_column(t_all *all, t_draw *dr, int x)
 
 	color = get_color(all->info->ceil);
 	y = -1;
-	while (y++ < dr->draw.x)
+	while (++y < dr->draw.x)
 		my_mlx_pixel_put(all->win, x, y, color);
-	y--;
 	y = draw_tex(all, dr, x, y);
 	color = get_color(all->info->floor);
-	while (y++ < all->info->r_y - 1)
+	y--;
+	while (++y < all->info->r_y - 1)
 		my_mlx_pixel_put(all->win, x, y, color);
 }
 

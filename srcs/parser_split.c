@@ -12,9 +12,9 @@
 
 #include "../head/cub.h"
 
-int		check_line_spaces(const char *str)
+int	check_line_spaces(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -34,17 +34,17 @@ char	**ft_split(char *str)
 	char	**arr;
 
 	i = -1;
-	if (!(n_str = check_before_split(str)))
+	n_str = check_before_split(str);
+	if (!n_str)
 		return (NULL);
-	if (!(arr = malloc(sizeof(char *) * (n_str + 1))))
-	{
-		printf("Error\nMalloc error");
-		return (NULL);
-	}
+	arr = malloc(sizeof(char *) * (n_str + 1));
+	if (!arr)
+		return (ft_split_error(NULL, 0, "Malloc"));
 	while (++i < n_str)
 	{
 		len = ft_split_lenstr(str);
-		if (!(arr[i] = malloc(sizeof(char) * (len + 1))))
+		arr[i] = malloc(sizeof(char) * (len + 1));
+		if (!arr[i])
 			return (ft_split_error(arr, i - 1, "Malloc"));
 		ft_strlcpy(arr[i], str, len + 1);
 		if (check_line_spaces(arr[i]))
@@ -55,9 +55,9 @@ char	**ft_split(char *str)
 	return (arr);
 }
 
-int		check_before_split(char *str)
+int	check_before_split(char *str)
 {
-	int n_str;
+	int	n_str;
 
 	n_str = get_num_str(str);
 	if (n_str < 3)
@@ -68,7 +68,7 @@ int		check_before_split(char *str)
 	return (n_str);
 }
 
-int		ft_split_lenstr(const char *str)
+int	ft_split_lenstr(const char *str)
 {
 	int	i;
 
@@ -84,7 +84,7 @@ int		ft_split_lenstr(const char *str)
 **		res++;
 */
 
-int		get_num_str(const char *str)
+int	get_num_str(const char *str)
 {
 	int	res;
 	int	i;

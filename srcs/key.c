@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		key_press(int key, t_all *all)
+int	key_press(int key, t_all *all)
 {
 	if (key == 2)
 		all->key.d = 1;
@@ -34,7 +34,7 @@ int		key_press(int key, t_all *all)
 	return (0);
 }
 
-int		key_unpress(int key, t_all *all)
+int	key_unpress(int key, t_all *all)
 {
 	if (key == 2)
 		all->key.d = 0;
@@ -57,37 +57,30 @@ void	rotate(t_all *all, int side)
 	all->plane = vec_rotate(all->plane, (M_PI_4 * side) * RS);
 }
 
-int		handle_key(t_all *all)
+void	handle_wasd(t_all *all, t_vec vec, int side)
 {
-	if (all->key.w)
-	{
-		if (check_position(all, all->plr->pos.x,
-							all->plr->pos.y + all->plr->dir.y * MS))
-			all->plr->pos.y += all->plr->dir.y * MS;
-		if (check_position(all, all->plr->pos.x + all->plr->dir.x * MS,
-								all->plr->pos.y))
-			all->plr->pos.x += all->plr->dir.x * MS;
-	}
-	if (all->key.s)
-	{
-		if (check_position(all, all->plr->pos.x,
-							all->plr->pos.y - all->plr->dir.y * MS))
-			all->plr->pos.y -= all->plr->dir.y * MS;
-		if (check_position(all, all->plr->pos.x - all->plr->dir.x * MS,
-								all->plr->pos.y))
-			all->plr->pos.x -= all->plr->dir.x * MS;
-	}
-	if (all->key.d || all->key.right)
-		rotate(all, 1);
-	if (all->key.a || all->key.left)
-		rotate(all, -1);
-	draw_screen(all);
-	return (0);
+	if (all->map[(int)(all->plr->pos.y + vec.y * side * MS)]
+		[(int)all->plr->pos.x] != '1')
+		all->plr->pos.y += vec.y * side * MS;
+	if (all->map[(int)all->plr->pos.y]
+		[(int)(all->plr->pos.x + vec.x * side * MS)] != '1')
+		all->plr->pos.x += vec.x * side * MS;
 }
 
-int		check_position(t_all *all, size_t x, size_t y)
+int	handle_key(t_all *all)
 {
-	if (all->map[y][x] != '1')
-		return (1);
+	if (all->key.w)
+		handle_wasd(all, all->plr->dir, 1);
+	if (all->key.s)
+		handle_wasd(all, all->plr->dir, -1);
+	if (all->key.d)
+		handle_wasd(all, vec_rotate(all->plr->dir, M_PI_2), 1);
+	if (all->key.a)
+		handle_wasd(all, vec_rotate(all->plr->dir, M_PI_2), -1);
+	if (all->key.right)
+		rotate(all, 1);
+	if (all->key.left)
+		rotate(all, -1);
+	draw_screen(all);
 	return (0);
 }

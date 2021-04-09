@@ -12,6 +12,19 @@
 
 #include "../head/cub.h"
 
+t_all	*init_mlx(t_all *all)
+{
+	all->win->mlx = mlx_init();
+	if (!all->win->mlx)
+		exit_err(all, "MLX init error", 3);
+	all = chose_resolution(all);
+	all->win->win = mlx_new_window(all->win->mlx, all->info->r_x,
+			all->info->r_y, "cub3D");
+	if (!all->win->win)
+		exit_err(all, "Window init error", 3);
+	return (all);
+}
+
 void	*init_err(t_all *all, char *er)
 {
 	printf("Error\nMalloc %s error", er);
@@ -42,15 +55,19 @@ t_all	*init_all_null(t_all *all)
 
 t_all	*init_all(void)
 {
-	t_all *all;
+	t_all	*all;
 
-	if (!(all = malloc(sizeof(t_all))))
+	all = malloc(sizeof(t_all));
+	if (!all)
 		return (init_err(NULL, "all"));
-	if (!(all->info = init_map(all->info)))
+	all->info = init_map(all->info);
+	if (!all->info)
 		return (init_err(all, "info"));
-	if (!(all->plr = init_plr(all->plr)))
+	all->plr = init_plr(all->plr);
+	if (!all->plr)
 		return (init_err(all, "player"));
-	if (!(all->win = init_win(all->win)))
+	all->win = init_win(all->win);
+	if (!all->win)
 		return (init_err(all, "win"));
 	all = init_all_null(all);
 	return (all);
@@ -62,17 +79,21 @@ t_img	**init_imgs(t_all *all)
 	t_img	**imgs;
 
 	i = 0;
-	if (!(imgs = malloc(sizeof(t_img*) * 6)))
+	imgs = malloc(sizeof(t_img *) * 6);
+	if (!imgs)
 		exit_err(all, "Malloc", 1);
 	while (i < 5)
 	{
-		if (!(imgs[i] = malloc(sizeof(t_img))))
+		imgs[i] = malloc(sizeof(t_img));
+		if (!imgs[i])
 			exit_err(all, "Malloc img", 3);
-		if (!(imgs[i]->img = mlx_xpm_file_to_image(all->win->mlx,
-				get_img_path(all, i), &imgs[i]->w, &imgs[i]->h)))
+		imgs[i]->img = mlx_xpm_file_to_image(all->win->mlx,
+				get_img_path(all, i), &imgs[i]->w, &imgs[i]->h);
+		if (!imgs[i]->img)
 			exit_err(all, "MLX img", 3);
-		if (!(imgs[i]->data = mlx_get_data_addr(imgs[i]->img, &imgs[i]->bpp,
-				&imgs[i]->line_l, &imgs[i]->en)))
+		imgs[i]->data = mlx_get_data_addr(imgs[i]->img, &imgs[i]->bpp,
+				&imgs[i]->line_l, &imgs[i]->en);
+		if (!imgs[i]->data)
 			exit_err(all, "MLX address", 3);
 		i++;
 	}

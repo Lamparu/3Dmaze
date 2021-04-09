@@ -6,19 +6,19 @@
 /*   By: lcierra <lcierra@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 19:31:31 by lcierra           #+#    #+#             */
-/*   Updated: 2021/04/04 22:48:08 by lcierra          ###   ########.fr       */
+/*   Updated: 2021/04/04 21:40:07 by lcierra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../head/cub.h"
 
-int		fill_header(int fd, int size)
+int	fill_header(int fd, int size)
 {
 	BYTE	header[14];
 
 	ft_bzero(header, 14);
-	header[0] = (BYTE)'B';
-	header[1] = (BYTE)'M';
+	header[0] = (BYTE) 'B';
+	header[1] = (BYTE) 'M';
 	header[2] = (BYTE)size;
 	header[3] = (BYTE)(size >> 8);
 	header[4] = (BYTE)(size >> 16);
@@ -29,9 +29,9 @@ int		fill_header(int fd, int size)
 	return (1);
 }
 
-int		fill_info(int fd, int w, int h)
+int	fill_info(int fd, int w, int h)
 {
-	BYTE info[40];
+	BYTE	info[40];
 
 	ft_bzero(info, 40);
 	info[0] = (BYTE)(40);
@@ -50,7 +50,7 @@ int		fill_info(int fd, int w, int h)
 	return (1);
 }
 
-int		fill_img(int fd, int w, int h, t_all *all)
+int	fill_img(int fd, int w, int h, t_all *all)
 {
 	int		i;
 	int		j;
@@ -61,15 +61,15 @@ int		fill_img(int fd, int w, int h, t_all *all)
 	add_zero = (4 - (w * 3) % 4) % 4;
 	ft_bzero(data, 3);
 	ft_bzero(zero, 3);
-	i = -1;
-	while (++i < h)
+	i = 0;
+	while (++i <= h)
 	{
 		j = -1;
 		while (++j < w)
 		{
-			data[0] = (BYTE)(((int*)all->win->addr)[(h - i) * w + j]);
-			data[1] = (BYTE)((((int*)all->win->addr)[(h - i) * w + j]) >> 8);
-			data[2] = (BYTE)((((int*)all->win->addr)[(h - i) * w + j]) >> 16);
+			data[0] = (BYTE)(((int *)all->win->addr)[(h - i) *w + j]);
+			data[1] = (BYTE)((((int *)all->win->addr)[(h - i) *w + j]) >> 8);
+			data[2] = (BYTE)((((int *)all->win->addr)[(h - i) *w + j]) >> 16);
 			if (write(fd, data, 3) < 0)
 				return (0);
 		}
@@ -81,9 +81,9 @@ int		fill_img(int fd, int w, int h, t_all *all)
 
 void	screenshot(t_all *all)
 {
-	int fd;
-	int size;
-	int add_zero;
+	int	fd;
+	int	size;
+	int	add_zero;
 
 	if (all->on != 1)
 		exit_err(all, "No window", 3);

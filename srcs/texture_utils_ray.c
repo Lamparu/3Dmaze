@@ -12,13 +12,13 @@
 
 #include "../head/cub.h"
 
-int		rayxmin(double posx, t_vec *sidedst, int mapx, double deltax)
+int	rayxmin(double posx, t_vec *sidedst, int mapx, double deltax)
 {
 	sidedst->x = (posx - mapx) * deltax;
 	return (-1);
 }
 
-int		rayxmax(double posx, t_vec *sidedst, int mapx, double deltax)
+int	rayxmax(double posx, t_vec *sidedst, int mapx, double deltax)
 {
 	sidedst->x = (mapx + 1.0 - posx) * deltax;
 	return (1);

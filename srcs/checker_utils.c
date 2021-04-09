@@ -12,7 +12,7 @@
 
 #include "../head/cub.h"
 
-int		check_borders(int x, int y, char **map)
+int	check_borders(int x, int y, char **map)
 {
 	if (y - 1 < 0)
 		return (1);
@@ -29,7 +29,7 @@ int		check_borders(int x, int y, char **map)
 	return (0);
 }
 
-int		valid_point(char x)
+int	valid_point(char x)
 {
 	if (x == '1' || x == '2' || x == '0' || check_direction(x) || x == ' ')
 		return (1);
@@ -38,7 +38,7 @@ int		valid_point(char x)
 
 char	*fill_empty_map(char *str, int len, const char *map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)
@@ -55,10 +55,10 @@ char	*fill_empty_map(char *str, int len, const char *map)
 	return (str);
 }
 
-int		check_valid_points(char **map)
+int	check_valid_points(char **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
@@ -75,10 +75,8 @@ int		check_valid_points(char **map)
 	return (1);
 }
 
-int		flood_fill(int x, int y, char **map, char **paint)
+int	flood_fill(int x, int y, char **map, char **paint)
 {
-	if (x == 4 && y == 3)
-		x = 4;
 	if (!map[y] || !map[y][x])
 		return (1);
 	if (map[y][x] == '1')
